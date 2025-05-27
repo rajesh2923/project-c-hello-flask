@@ -30,9 +30,9 @@ jobs:
         run: |
           source venv/bin/activate
           pytest --cov=app --cov-report=xml:coverage.xml
-          ls -l coverage.xml     # show that coverage.xml was created
+          ls -l coverage.xml
 
-      - name: Verify coverage file
+      - name: Verify coverage file exists
         run: |
           if [ ! -f "coverage.xml" ]; then
             echo "Error: coverage.xml not found!"
