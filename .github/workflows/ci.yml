@@ -14,10 +14,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Python 3.13
+      - name: Set up Python 3.11
         uses: actions/setup-python@v4
         with:
-          python-version: '3.13'
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
@@ -30,7 +30,14 @@ jobs:
         run: |
           source venv/bin/activate
           pytest --cov=app --cov-report=xml:coverage.xml
-          ls -l coverage.xml
+          ls -l coverage.xml     # show that coverage.xml was created
+
+      - name: Verify coverage file
+        run: |
+          if [ ! -f "coverage.xml" ]; then
+            echo "Error: coverage.xml not found!"
+            exit 1
+          fi
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v3
